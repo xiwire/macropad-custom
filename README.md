@@ -1,6 +1,6 @@
 # Adafruit MacroPad RP2040
-***********Work in progress**
-****
+**Work in progress**
+
 Custom codes for the [Adafruit RP2040 Macropad](https://learn.adafruit.com/adafruit-macropad-rp2040).
 
 ## Using
