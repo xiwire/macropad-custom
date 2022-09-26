@@ -3,6 +3,8 @@
 # Usage:
 # ./update.sh <code_name> [<mount_point>]
 
+trap echo EXIT
+
 RED="\033[31m"
 GREEN="\033[32m"
 YELLOW="\033[33m"
@@ -19,8 +21,10 @@ logError () {
     echo -e "${RED}${BOLD}${@}${RESET}"
 }
 
+echo
 if [ -z $1 ]; then
     logError "No code specified. Please specify a code to upload."
+    echo
     logInfo "Available codes:"
     echo "$(ls codes)"
     exit 1
@@ -33,12 +37,15 @@ else
 fi
 
 if [ -z $MOUNTED_PATH ]; then
-    log 'No CIRCUITPY drives are mounted'
+    logError 'No CIRCUITPY drives are mounted.'
     exit 1
 fi
 
 if [ $(wc -l <<< MOUNTED_PATH) -gt 1 ]; then
-    log 'More than one CIRCUITPY drive mounted, please specify one.'
+    logError 'More than one CIRCUITPY drive mounted, please specify one.'
+    echo
+    logInfo 'Available CIRCUITPY drives:'
+    echo "$MOUNTED_PATH"
     exit 1
 fi
 
@@ -46,3 +53,5 @@ logInfo "Installing ${1} to ${MOUNTED_PATH}"
 cp "codes/${1}/code.py" "${MOUNTED_PATH}/code.py"
 
 logInfo "Installed! :D"
+
+exit 0
